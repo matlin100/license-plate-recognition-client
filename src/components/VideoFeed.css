@@ -1,0 +1,11 @@
+/* VideoFeed.css */
+
+.imgFrame {
+    width: 80%;
+  }
+  
+  .imgFrameWithBorder {
+    width: 80%;
+    border: 5px solid green;
+  }
+  
