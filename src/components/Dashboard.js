@@ -3,6 +3,7 @@ import { io } from 'socket.io-client';
 import VideoFeed from './VideoFeed';
 import { startVideo, stopVideo } from '../api/videoAPI';
 import LicensePlateDisplay from './LicensePlateDisplay'; // Import the new component
+import AllowedPlates from  './allowedPlates'
 
 const Dashboard = () => {
   const [licensePlate, setLicensePlate] = useState('');
@@ -69,7 +70,7 @@ const Dashboard = () => {
       { showGreenFrame && (
         <LicensePlateDisplay licensePlate={licensePlate} plateImage={plateImage} />
       )}
-
+      <AllowedPlates/>
       {isCapturing ? (
         <button onClick={handleStopVideo}>Stop Video</button>
       ) : (
