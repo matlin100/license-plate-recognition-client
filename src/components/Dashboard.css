@@ -1,0 +1,29 @@
+.dashboard-container {
+    display: grid;
+    grid-template-rows: auto auto 1fr; /* Rows for video, license plate, and bottom section */
+    grid-template-columns: 1fr; /* Default to single column layout */
+    gap: 7vw; /* Space between grid items */
+    padding: 0 7vw; /* Horizontal padding */
+    margin-top: 7vh;
+    margin-bottom: 7vh;
+    justify-content: center; 
+    align-content: center;
+}
+
+.video-feed-container,
+.license-plate-display-container,
+.bottom-section {
+    width: 100%; /* Ensure full width by default */
+}
+
+
+  @media (min-width: 800px) { /* Adjust for larger screens */
+    .dashboard-container {
+        grid-template-columns: 70% 30%; /* Two columns for video and license when side by side */
+    }
+
+    .bottom-section {
+        grid-template-columns: 1fr 1fr; /* Split bottom section into two columns */
+        display: grid;
+    }
+}

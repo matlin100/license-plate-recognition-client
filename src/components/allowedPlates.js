@@ -10,13 +10,9 @@ const AllowedPlates = () => {
     });
 
     useEffect(() => {
-        const fetchAllPlates = async () => {
-            const plates = await getPlates();
-            setPlates(plates);
-        };
-        fetchAllPlates();
+        fetchPlates();
     }, []);
-    
+
     const fetchPlates = async () => {
         try {
             const data = await getPlates();
@@ -26,17 +22,15 @@ const AllowedPlates = () => {
         }
     };
 
-    const handleAddPlate = async () => {
-        await createPlate(formData);
+    const handleAddOrUpdatePlate = async () => {
+        console.log(edit ? 'Updating plate' : 'Adding new plate', formData);
+        if (edit) {
+            await updatePlate({ id: edit }, formData);
+        } else {
+            await createPlate(formData);
+        }
         fetchPlates();
-        setFormData({ plateNumber: '', userId: '' }); // Reset the form
-    };
-
-    const handleUpdatePlate = async () => {
-        await updatePlate({ id: edit }, formData);
-        fetchPlates();
-        setEdit(null); // Reset edit mode
-        setFormData({ plateNumber: '', userId: '' }); // Reset the form
+        handleResetForm();
     };
 
     const handleDeletePlate = async (plateId) => {
@@ -51,8 +45,14 @@ const AllowedPlates = () => {
         });
     };
 
+    const handleResetForm = () => {
+        console.log('Resetting form');
+        setEdit(null);
+        setFormData({ plateNumber: '', userId: '' });
+    };
+
     return (
-        <div>
+        <div className='component'>
             <h1>Plates</h1>
             <input
                 type="text"
@@ -68,17 +68,21 @@ const AllowedPlates = () => {
                 onChange={handleChange}
                 placeholder="User ID"
             />
-            {edit ? (
-                <button onClick={handleUpdatePlate}>Update Plate</button>
-            ) : (
-                <button onClick={handleAddPlate}>Add Plate</button>
+            <button onClick={handleAddOrUpdatePlate}>
+                {edit ? 'Submit Update' : 'Add Plate'}
+            </button>
+            {edit && (
+                <button onClick={handleResetForm}>Cancel Edit</button>
             )}
-
             {plates.map(plate => (
-                <div key={plate.id}>
+                <div key={plate._id}>
                     {plate.plateNumber} - {plate.userId}
-                    <button onClick={() => { setEdit(plate.id); setFormData({ plateNumber: plate.plateNumber, userId: plate.userId }); }}>Edit</button>
-                    <button onClick={() => handleDeletePlate(plate.id)}>Delete</button>
+                    <button onClick={() => {
+                        console.log('Editing plate object:', plate);
+                        setEdit(plate._id);
+                        setFormData({ plateNumber: plate.plateNumber, userId: plate.userId });
+                    }}>Edit</button>
+                    <button onClick={() => handleDeletePlate(plate._id)}>Delete</button>
                 </div>
             ))}
         </div>

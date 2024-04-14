@@ -1,11 +1,15 @@
 /* VideoFeed.css */
+.videofeed{
+    place-self: center; /* new */
+}
 
 .imgFrame {
-    width: 80%;
+    place-self: center; /* new */
   }
   
-  .imgFrameWithBorder {
-    width: 80%;
-    border: 5px solid green;
-  }
+
+img{
+   width: fit-content;
+   border-radius: 25px;
+}
   
