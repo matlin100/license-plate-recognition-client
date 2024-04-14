@@ -1,5 +1,14 @@
 body{
-  background-image:  repeating-radial-gradient(circle at 0 0, transparent 0, #1e414d 32px), repeating-linear-gradient(#4346ec, #4346ec);
+  background:
+      radial-gradient(circle farthest-side at 0% 50%,#e8f7f7 23.5%,#0000 0)33.6px 48px,
+      radial-gradient(circle farthest-side at 0% 50%,rgba(71, 74, 255, 0.82) 24%,#0000 0)30.4px 48px,
+      linear-gradient(#e8f7f7 14%,#0000 0, #0000 85%,#e8f7f7 0)0 0,
+      linear-gradient(150deg,#e8f7f7 24%,rgba(71, 74, 255, 0.82) 0,rgba(71, 74, 255, 0.82) 26%,#0000 0,#0000 74%,rgba(71, 74, 255, 0.82) 0,rgba(71, 74, 255, 0.82) 76%,#e8f7f7 0)0 0,
+      linear-gradient(30deg,#e8f7f7 24%,rgba(71, 74, 255, 0.82) 0,rgba(71, 74, 255, 0.82) 26%,#0000 0,#0000 74%,rgba(71, 74, 255, 0.82) 0,rgba(71, 74, 255, 0.82) 76%,#e8f7f7 0)0 0,
+      linear-gradient(90deg,rgba(71, 74, 255, 0.82) 2%,#e8f7f7 0,#e8f7f7 98%,rgba(71, 74, 255, 0.82) 0%)0 0 #e8f7f7;
+background-size: 64px 96px;
+background-color: #e8f7f7;
+
   background-color: #1e414d;
   font-family: Georgia, serif;
   font-size: 20px;
