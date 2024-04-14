@@ -1,29 +1,47 @@
+/* Reset margins and padding for the container and all children to ensure no unexpected spacing */
+.dashboard-container, .dashboard-container * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Ensures padding does not affect the width calculations */
+}
+
 .dashboard-container {
-    display: grid;
-    grid-template-rows: auto auto 1fr; /* Rows for video, license plate, and bottom section */
-    grid-template-columns: 1fr; /* Default to single column layout */
-    gap: 7vw; /* Space between grid items */
-    padding: 0 7vw; /* Horizontal padding */
-    margin-top: 7vh;
-    margin-bottom: 7vh;
-    justify-content: center; 
-    align-content: center;
+  display: grid;
+  grid-template-columns: 70% 30%; /* Two columns, 70% and 30% of the container width */
+  grid-template-rows: 15vh 80vh; /* First row fixed at 80px, second row takes the remaining space */
+  gap: 10px; /* Consistent gap of 10px between columns and rows */
+  align-items: start; /* Align items to the start of their grid area */
 }
 
-.video-feed-container,
-.license-plate-display-container,
-.bottom-section {
-    width: 100%; /* Ensure full width by default */
+.topnavbar {
+  grid-column: 1 / span 2; /* Spans across both columns */
+  grid-row: 1; /* Occupies the first row */
 }
 
+.video-feed-container {
+  grid-column: 1; /* Occupies the first column */
+  grid-row: 2; /* Occupies the second row */
+  padding: 0 0 0 60px;
+}
 
-  @media (min-width: 800px) { /* Adjust for larger screens */
-    .dashboard-container {
-        grid-template-columns: 70% 30%; /* Two columns for video and license when side by side */
-    }
+.history-container {
+  grid-column: 2; /* Occupies the second column */
+  grid-row: 2; /* Occupies the second row */
+  padding: 0px 60px;
+}
 
-    .bottom-section {
-        grid-template-columns: 1fr 1fr; /* Split bottom section into two columns */
-        display: grid;
-    }
+@media (max-width: 800px) {
+  .dashboard-container {
+    grid-template-columns: 1fr; /* One column layout */
+    grid-template-rows: repeat(4, auto); /* Enough rows for all elements */
+    gap: 10px;
+  }
+
+
+  .video-feed-container,
+  .history-container {
+    grid-column: 1; /* Make all items span the full width */
+    grid-row: auto; /* Let each item flow to the next row */
+    padding: 40px; /* Reduced padding for smaller screens */
+  }
 }
