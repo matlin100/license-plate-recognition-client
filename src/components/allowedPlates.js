@@ -33,14 +33,18 @@ const AllowedPlates = () => {
     };
 
     const handleUpdatePlate = async () => {
-        await updatePlate({ id: edit }, formData);
-        fetchPlates();
-        setEdit(null); // Reset edit mode
-        setFormData({ plateNumber: '', userId: '' }); // Reset the form
+        try {
+            await updatePlate(edit, formData); // Pass the plate ID to updatePlate
+            fetchPlates();
+            setEdit(null); // Reset edit mode
+            setFormData({ plateNumber: '', userId: '' }); // Reset the form
+        } catch (error) {
+            console.error('Failed to update plate:', error);
+        }
     };
 
     const handleDeletePlate = async (plateId) => {
-        await deletePlate({ id: plateId });
+        await deletePlate(plateId);
         fetchPlates();
     };
 
@@ -75,10 +79,11 @@ const AllowedPlates = () => {
             )}
 
             {plates.map(plate => (
-                <div key={plate.id}>
+                
+                <div key={plate._id}>
                     {plate.plateNumber} - {plate.userId}
-                    <button onClick={() => { setEdit(plate.id); setFormData({ plateNumber: plate.plateNumber, userId: plate.userId }); }}>Edit</button>
-                    <button onClick={() => handleDeletePlate(plate.id)}>Delete</button>
+                    <button onClick={() => { setEdit(plate._id); setFormData({ plateNumber: plate.plateNumber, userId: plate.userId }); console.log(plate) }}>Edit</button>
+                    <button onClick={() => handleDeletePlate(plate._id)}>Delete</button>
                 </div>
             ))}
         </div>

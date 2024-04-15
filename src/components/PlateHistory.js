@@ -1,3 +1,4 @@
+// PlateHistory.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { TextField, Button, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, styled, CircularProgress } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
@@ -31,15 +32,17 @@ const PlateHistory = () => {
     });
     const [results, setResults] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
-
 
     const handleSearch = useCallback(async (resetPage = false) => {
         if (resetPage) setCurrentPage(1);
         setIsLoading(true);  // Start loading before the API request
+        console.log('Search params:', searchParams); // Add this line
         try {
             const data = await searchPlateHistory({...searchParams, page: currentPage});
             setResults(data.documents);
+            setTotalPages(data.totalPages);
             setIsLoading(false);  // Stop loading on successful data fetch
         } catch (error) {
             console.error('Search failed:', error);
@@ -57,6 +60,18 @@ const PlateHistory = () => {
         setSearchParams({...searchParams, [e.target.name]: e.target.value});
     };
 
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     return (
         <Paper className='component' elevation={3} sx={{ padding: 3 }}>
             <Typography variant="h6" color="primary">Search Plate History</Typography>
@@ -68,28 +83,33 @@ const PlateHistory = () => {
                 {isLoading && <CircularProgress size={24} sx={{ marginLeft: 2 }} />}
             </Box>
             {!isLoading && results.length > 0 && (
-                <TableContainer component={Paper} sx={{ marginTop: 2 }}>
-                    <Table aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>Plate Number</StyledTableCell>
-                                <StyledTableCell>Time Detected</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {results.map((item, index) => (
-                                <StyledTableRow key={index}>
-                                    <StyledTableCell align="right">{item.plate_number}</StyledTableCell>
-                                    <StyledTableCell align="right">{new Date(item.timestamp).toLocaleString()}</StyledTableCell>
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <div>
+                    <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+                        <Table aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>Plate Number</StyledTableCell>
+                                    <StyledTableCell>Time Detected</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {results.map((item, index) => (
+                                    <StyledTableRow key={index}>
+                                        <StyledTableCell align="right">{item.plate_number}</StyledTableCell>
+                                        <StyledTableCell align="right">{new Date(item.timestamp).toLocaleString()}</StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <Box mt={2}>
+                        <Button onClick={handlePrevPage} disabled={currentPage === 1}>Previous Page</Button>
+                        <Button onClick={handleNextPage} disabled={currentPage === totalPages}>Next Page</Button>
+                    </Box>
+                </div>
             )}
         </Paper>
     );
-    
 };
 
 export default PlateHistory;

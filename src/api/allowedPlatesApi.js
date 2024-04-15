@@ -29,7 +29,7 @@ export const getPlates = async (query) => {
 export const updatePlate = async (plateId, data) => {
     try {
         const response = await axios.put(`${API_BASE_URL}/update`, data, {
-            params: { id: plateId } // Assuming `id` is the identifier for the plate document
+            params: { _id: plateId } // Assuming `id` is the identifier for the plate document
         });
         return response.data;
     } catch (error) {
@@ -39,9 +39,11 @@ export const updatePlate = async (plateId, data) => {
 };
 
 
-export const deletePlate = async (query) => {
+export const deletePlate = async (plateId) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/delete`, { params: query });
+        const response = await axios.delete(`${API_BASE_URL}/delete`, {
+            params: { _id: plateId } // Assuming `id` is the identifier for the plate document
+        });
         return response.data;
     } catch (error) {
         console.error('Failed to delete document:', error.response?.data || error.message);
