@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { uploadFile } from '../api/videoAPI';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 const UploadControl = () => {
     const [file, setFile] = useState(null);
@@ -17,17 +16,17 @@ const UploadControl = () => {
     };
 
     const handleCameraIndexChange = (event) => {
-        setCameraIndex(parseInt(event.target.value, 10)); // Ensure the value is an integer
+        setCameraIndex(event.target.value);
     };
 
     const handleUpload = async () => {
-        let formData = new FormData();
+        let formData = null;
         if (file) {
-            formData.append('file', file);
+            formData = file;
         } else if (videoPath) {
-            formData.append('video_path', videoPath);
+            formData = { video_path: videoPath };
         } else if (cameraIndex !== 0) {
-            formData.append('camera_index', cameraIndex);
+            formData = { camera_index: cameraIndex };
         } else {
             alert('Please select a file, provide a video path, or choose a camera index!');
             return;
@@ -44,12 +43,12 @@ const UploadControl = () => {
     };
 
     return (
-        <div className="container mt-3">
-            <input type="file" className="form-control mb-3" onChange={handleFileChange} />
-            <input type="text" className="form-control mb-3" placeholder="Video Path" value={videoPath} onChange={handleVideoPathChange} />
-            <input type="number" className="form-control mb-3" placeholder="Camera Index" value={cameraIndex} onChange={handleCameraIndexChange} />
-            <button className="btn btn-primary" onClick={handleUpload}>Upload File</button>
-            {uploadResponse && <p className="alert alert-success mt-3">{uploadResponse}</p>}
+        <div>
+            <input type="file" onChange={handleFileChange} />
+            <input type="text" placeholder="Video Path" value={videoPath} onChange={handleVideoPathChange} />
+            <input type="number" placeholder="Camera Index" value={cameraIndex} onChange={handleCameraIndexChange} />
+            <button onClick={handleUpload}>Upload File</button>
+            {uploadResponse && <p>{uploadResponse}</p>}
         </div>
     );
 };

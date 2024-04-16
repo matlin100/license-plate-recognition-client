@@ -39,7 +39,7 @@ const VideoFeed = () => {
         {true ? (
             frame ? (
               <>
-                <img src={frame} alt="Video Feed" style={{ width: '100%', border: showGreenFrame ? '5px solid green' : '5px solid blue' }} />
+                <img src={frame} alt="Video Feed" style={{ width: '100%', border: showGreenFrame ? '10px solid green' : '10px solid blue' }} />
                
               </>
             ) : (
