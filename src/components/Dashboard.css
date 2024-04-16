@@ -7,16 +7,12 @@
 
 .dashboard-container {
   display: grid;
-  grid-template-columns: 70% 30%; /* Two columns, 70% and 30% of the container width */
+  grid-template-columns: 55% 45%; /* Two columns, 70% and 30% of the container width */
   grid-template-rows: 15vh 80vh; /* First row fixed at 80px, second row takes the remaining space */
-  gap: 10px; /* Consistent gap of 10px between columns and rows */
+ 
   align-items: start; /* Align items to the start of their grid area */
 }
 
-.topnavbar {
-  grid-column: 1 / span 2; /* Spans across both columns */
-  grid-row: 1; /* Occupies the first row */
-}
 
 .video-feed-container {
   grid-column: 1; /* Occupies the first column */
@@ -30,8 +26,53 @@
   padding: 0px 60px;
 }
 
+.license-plate-display-container {
+  position: absolute;
+  padding: 10px;
+  top: 25px;
+  left: 55px;
+ 
+  background-color: aliceblue;
+  height: fit-content; /* Adjust height as needed */
+  border-radius: 50px; /* Circular shape */
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px; /* Space from the left edge */
+  border: 2px solid white; /* Solid white border */
+}
+
+@media (max-width: 860px) {
+  .license-plate-display-container {
+    position: relative;
+    margin-top: -100px;
+    left: 5%;
+    width: 90%;
+  }
+  
+}
+
+@media (max-width: 1100px) {
+  .dashboard-container {
+    grid-template-columns: 50% 50%;
+  }
+
+
+  .video-feed-container,
+  .history-container {
+    padding: 40px; /* Reduced padding for smaller screens */
+  }
+}
+
+@media (max-width: 850px) {
+  .license-plate-display-container {
+    right: 55px ;
+    overflow: scroll;
+  }
+}
+
 @media (max-width: 800px) {
   .dashboard-container {
+    margin-top: 200px;
     grid-template-columns: 1fr; /* One column layout */
     grid-template-rows: repeat(4, auto); /* Enough rows for all elements */
     gap: 10px;

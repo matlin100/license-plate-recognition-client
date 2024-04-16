@@ -1,0 +1,37 @@
+.license-plate-display {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Distribute space between elements */
+    gap: 30px; /* Space between elements */
+    margin-bottom: 10px;
+  }
+  
+  .license-info {
+    display: flex;
+    flex-direction: column; /* Stack text vertically */
+    justify-content: center;
+  }
+  
+  .license-image {
+    display: flex;
+    justify-content: center;
+  }
+  
+  @media (max-width: 960px) {
+    .license-plate-display {
+      flex-direction: column; /* Stack elements vertically on small screens */
+      align-items: center; /* Center align the items horizontally */
+      gap: 15px; /* Reduce the gap for smaller screens */
+    }
+  
+    .license-image img {
+      width: 100%; /* Reduce image width to fit mobile screens */
+      max-width: 300px; /* Set a max-width to prevent the image from becoming too large */
+    }
+  
+    .license-info p {
+      text-align: center; /* Center-align text for better readability on small screens */
+    
+    }
+  }
+  

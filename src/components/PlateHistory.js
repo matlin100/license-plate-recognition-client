@@ -1,9 +1,10 @@
 // PlateHistory.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { TextField, Button, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, styled, CircularProgress } from '@mui/material';
+import { TextField, Button, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, styled, CircularProgress, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { searchPlateHistory } from '../api/plateHistoryApi';
 import './PlateHistory.css'; // Optionally include custom CSS for additional styling
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -73,15 +74,25 @@ const PlateHistory = () => {
     };
 
     return (
-        <Paper className='component' elevation={3} sx={{ padding: 3 }}>
-            <Typography variant="h6" color="primary">Search Plate History</Typography>
-            <TextField label="Plate Number" variant="outlined" value={searchParams.plateNumber} onChange={handleInputChange} name="plateNumber" fullWidth margin="normal"/>
-            <TextField type="date" label="Start Date" variant="outlined" value={searchParams.startDate} onChange={handleInputChange} name="startDate" fullWidth margin="normal" InputLabelProps={{ shrink: true }}/>
-            <TextField type="date" label="End Date" variant="outlined" value={searchParams.endDate} onChange={handleInputChange} name="endDate" fullWidth margin="normal" InputLabelProps={{ shrink: true }}/>
-            <Box mt={2}>
-                <Button variant="contained" color="primary" onClick={() => handleSearch(true)}>Search</Button>
-                {isLoading && <CircularProgress size={24} sx={{ marginLeft: 2 }} />}
-            </Box>
+        <Paper className='component' elevation={3} sx={{ padding: 3, borderRadius: '50px' }}>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Typography variant="h6" color="primary">Search Plate History</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <TextField label="Plate Number" variant="outlined" value={searchParams.plateNumber} onChange={handleInputChange} name="plateNumber" fullWidth margin="normal" />
+                    <TextField type="date" label="Start Date" variant="outlined" value={searchParams.startDate} onChange={handleInputChange} name="startDate" fullWidth margin="normal" InputLabelProps={{ shrink: true }} />
+                    <TextField type="date" label="End Date" variant="outlined" value={searchParams.endDate} onChange={handleInputChange} name="endDate" fullWidth margin="normal" InputLabelProps={{ shrink: true }} />
+                    <Box mt={2}>
+                        <Button variant="contained" color="primary" onClick={() => handleSearch(true)}>Search</Button>
+                        {isLoading && <CircularProgress size={24} sx={{ marginLeft: 2 }} />}
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
             {!isLoading && results.length > 0 && (
                 <div>
                     <TableContainer component={Paper} sx={{ marginTop: 2 }}>
@@ -102,9 +113,9 @@ const PlateHistory = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <Box mt={2}>
-                        <Button onClick={handlePrevPage} disabled={currentPage === 1}>Previous Page</Button>
-                        <Button onClick={handleNextPage} disabled={currentPage === totalPages}>Next Page</Button>
+                    <Box mt={0} display="flex" justifyContent="center">
+                        <Button onClick={handlePrevPage} disabled={currentPage === 1}>{'<'}</Button>
+                        <Button onClick={handleNextPage} disabled={currentPage === totalPages}>{'>'}</Button>
                     </Box>
                 </div>
             )}

@@ -3,7 +3,8 @@ import { startVideo, stopVideo } from '../api/videoAPI';
 import { Box, CircularProgress, Button } from '@mui/material';
 import './VideoFeed.css';
 import { useLicensePlate } from '../context/LicensePlateContext'; // Make sure this path is correct
-import LicensePlateDisplay from './LicensePlateDisplay'; // Import if you're using it within this component
+
+
 
 const VideoFeed = () => {
   const { frame, showGreenFrame } = useLicensePlate();
@@ -33,13 +34,13 @@ const VideoFeed = () => {
   };
 
   return (
-    <Box className='component' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box className='component' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', borderRadius:'50PX', padding:'30px'}}>
         <h2>Video Feed Component</h2>
-        {isCapturing ? (
+        {true ? (
             frame ? (
               <>
                 <img src={frame} alt="Video Feed" style={{ width: '100%', border: showGreenFrame ? '5px solid green' : '5px solid blue' }} />
-                {showGreenFrame && ( <LicensePlateDisplay  />)}
+               
               </>
             ) : (
                 <CircularProgress />

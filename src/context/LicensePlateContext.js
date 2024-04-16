@@ -10,6 +10,7 @@ export const LicensePlateProvider = ({ children }) => {
     const [plateImage, setPlateImage] = useState(null);
     const [showGreenFrame, setShowGreenFrame] = useState(false);
     const [frame, setFrame] = useState(null);  // New state for video frames
+    const [frameStopped, setFrameStopped] = useState(false); // State to track frame stop
 
     // Create socket connection
     const socket = io('http://localhost:5001');
@@ -30,6 +31,13 @@ export const LicensePlateProvider = ({ children }) => {
         // Handling video frame updates
         socket.on('frame', (data) => {
             setFrame(data.data);
+            setFrameStopped(false); // Reset frame stopped flag
+        });
+
+        // Handling frame stop signal
+        socket.on('frame_stopped', () => {
+            setFrame(null); // Set frame to null
+            setFrameStopped(true); // Set frame stopped flag
         });
 
         // Cleanup on unmount
@@ -37,6 +45,7 @@ export const LicensePlateProvider = ({ children }) => {
             socket.off('license_plate_detected');
             socket.off('plate_image');
             socket.off('frame');
+            socket.off('frame_stopped');
         };
     }, [socket]);
 
@@ -46,6 +55,7 @@ export const LicensePlateProvider = ({ children }) => {
             plateImage, setPlateImage,
             showGreenFrame, setShowGreenFrame,
             frame, setFrame,
+            frameStopped, setFrameStopped,
             socket
         }}>
             {children}
